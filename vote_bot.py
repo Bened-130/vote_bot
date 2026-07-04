@@ -39,7 +39,7 @@ def run_mass_vote():
             user_name, email, fake_phone = generate_fake_user()
             
             # This randomly picks one of the two names provided
-            voted_for = random.choice(CANDIDATE)
+            voted_for = random.choice(Candidate)
 
             payload = {
                 VOTE_ID: voted_for,
