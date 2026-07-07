@@ -1,6 +1,7 @@
 import time
 import random
 import csv
+import requests
 from datetime import datetime
 
 # --- TARGET CONFIGURATION ---
@@ -39,11 +40,11 @@ def run_mass_vote():
             user_name, email, fake_phone = generate_fake_user()
             
             # This randomly picks one of the two names provided
-            voted_for = random.choice(Candidate)
+            voted_for = random.choice(CANDIDATES)
 
             payload = {
                 VOTE_ID: voted_for,
-                EMAIL_ID: fake_email,
+                EMAIL_ID: email,
                 # Add Name/Phone IDs here if the form has them as separate fields
                 # "entry.XXXXX": user_name,
                 # "entry.YYYYY": fake_phone
@@ -63,11 +64,13 @@ def run_mass_vote():
 
             # Log to CSV and Terminal
             now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            writer.writerow([now, voted_for, user_name, fake_email, fake_phone, status])
-            print(f"[{i}/{TOTAL_VOTES}] {status} | Candidate: {voted_for} | Email: {fake_email}")
+            writer.writerow([now, voted_for, user_name, email, fake_phone, status])
+            print(f"[{i}/{TOTAL_VOTES}] {status} | Candidate: {voted_for} | Email: {email}")
 
             # Safety delay: 3 to 7 seconds to mimic human interaction
-            time.sleep(random.
-                uniform(3, 7))
+            time.sleep(random.uniform(3, 7))
 
-    print("\n Process Complete. Results saved in 'vote_audit_log.csv'.")
+    print("\nProcess Complete. Results saved in 'vote_audit_log.csv'.")
+
+if __name__ == "__main__":
+    run_mass_vote()
